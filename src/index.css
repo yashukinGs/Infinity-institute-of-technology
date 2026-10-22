@@ -330,9 +330,6 @@ svg { flex-shrink: 0; }
 .brand-footer .brand-name { font-size: 21px; }
 .brand .brand-logo img { width: 94%; height: 94%; }
 
-.razorpay-checkout { background: #f8f7ff; border-color: #e5e1fa; color: #6250b4; }
-.razorpay-checkout h3 { color: #3f3769; }
-.razorpay-checkout p { color: #817b99; }
 .payment-error { display: flex; flex-direction: column; gap: 5px; padding: 13px 15px; margin-top: 12px; border: 1px solid #f1caca; border-radius: 8px; background: #fff7f7; color: #a04444; font-size: 11px; line-height: 1.6; }
 .payment-error button { align-self: flex-start; padding: 3px 0; border: 0; background: transparent; color: #5149dc; font-weight: 700; text-decoration: underline; }
 .payment-success { margin: 22px 0 18px; padding: 22px; border: 1px solid #cfe9d6; border-radius: 10px; background: #f4fbf6; text-align: center; }

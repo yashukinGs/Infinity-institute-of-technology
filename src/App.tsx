@@ -33,13 +33,6 @@ import {
   paymentScreenshotLink,
   whatsappLink,
 } from "./config/payment"
-import {
-  createRazorpayOrder,
-  loadRazorpayCheckout,
-  verifyRazorpayPayment,
-  type VerifiedPurchase,
-} from "./config/razorpay"
-
 function Brand({ footer = false }: { footer?: boolean }) {
   const logoDialogRef = useRef<HTMLDialogElement>(null)
 
@@ -324,11 +317,6 @@ function CheckoutModal({
   onClose: () => void
 }) {
   const [step, setStep] = useState<"details" | "payment">("details")
-  const [paymentStatus, setPaymentStatus] = useState<
-    "idle" | "creating" | "verifying" | "success" | "error"
-  >("idle")
-  const [paymentError, setPaymentError] = useState("")
-  const [purchase, setPurchase] = useState<VerifiedPurchase | null>(null)
   const dialogRef = useRef<HTMLDialogElement>(null)
   useEffect(() => {
     const dialog = dialogRef.current
@@ -345,59 +333,6 @@ function CheckoutModal({
     dialogRef.current?.scrollTo({ top: 0 })
   }, [step])
 
-  async function startPayment() {
-    setPaymentStatus("creating")
-    setPaymentError("")
-    try {
-      const [order] = await Promise.all([
-        createRazorpayOrder(course.id),
-        loadRazorpayCheckout(),
-      ])
-      if (!window.Razorpay) throw new Error("Secure checkout did not load")
-
-      const checkout = new window.Razorpay({
-        key: order.keyId,
-        amount: order.amount,
-        currency: order.currency,
-        name: order.name,
-        description: order.description,
-        order_id: order.orderId,
-        image: `${window.location.origin}/infinity-institute-logo-hd.png`,
-        theme: { color: "#5149dc" },
-        modal: { ondismiss: () => setPaymentStatus("idle") },
-        handler: async (response) => {
-          setPaymentStatus("verifying")
-          try {
-            const verifiedPurchase = await verifyRazorpayPayment(
-              course.id,
-              response,
-            )
-            setPurchase(verifiedPurchase)
-            setPaymentStatus("success")
-          } catch (error) {
-            setPaymentError(
-              error instanceof Error
-                ? error.message
-                : "Payment verification failed",
-            )
-            setPaymentStatus("error")
-          }
-        },
-      })
-      checkout.open()
-    } catch (error) {
-      setPaymentError(
-        error instanceof Error ? error.message : "Unable to start payment",
-      )
-      setPaymentStatus("error")
-    }
-  }
-
-  const verifiedWhatsAppLink = purchase
-    ? whatsappLink(
-        `Hello Infinity Institute of Technology,\nMy Razorpay payment has been verified.\n\nCourse: ${course.name}\nAmount: ₹${course.price}\nPayment ID: ${purchase.paymentId}\n\nPlease send my purchased course access links.`,
-      )
-    : whatsappLink()
   return (
     <dialog
       ref={dialogRef}
@@ -472,7 +407,7 @@ function CheckoutModal({
                 <ArrowRight size={18} />
               </button>
               <p className="payment-note">
-                <ShieldCheck size={14} /> Secure Razorpay checkout · Automatic
+                <ShieldCheck size={14} /> UPI payment · Manual screenshot
                 payment verification
               </p>
             </div>
@@ -483,18 +418,14 @@ function CheckoutModal({
               <ChevronLeft size={16} /> Back to course
             </button>
             <span className="eyebrow">SECURE, ONE-TIME PAYMENT</span>
-            <h2 id="dialog-title">
-              {paymentStatus === "success"
-                ? "Payment verified."
-                : "You’re one step closer."}
-            </h2>
+            <h2 id="dialog-title">You’re one step closer.</h2>
             <p className="payment-course-name">{course.name}</p>
             <div className="payment-amount">
               <span>Amount to Pay</span>
               <strong>₹{course.price}</strong>
               <span>No subscription or recurring charges</span>
             </div>
-            {paymentStatus === "success" && purchase ? (
+            {/*
               <>
                 <div className="payment-success">
                   <span className="payment-success-icon">
@@ -539,9 +470,9 @@ function CheckoutModal({
               </>
             ) : (
               <>
-                <div className="payment-setup razorpay-checkout">
+                <div className="payment-setup upi-legacy-placeholder">
                   <CreditCard size={28} />
-                  <h3>Pay securely with Razorpay</h3>
+                  <h3>Pay securely with UPI</h3>
                   <p>
                     Use UPI, cards, net banking or other available methods.
                     Payments are verified automatically.
@@ -601,11 +532,34 @@ function CheckoutModal({
                   </div>
                 )}
               </>
-            )}
+            */}
+            <div className="payment-setup upi-setup">
+              <Smartphone size={24} />
+              <h3>Pay directly with UPI</h3>
+              <p>
+                Opens your UPI app with ₹{course.price} pre-filled. Send your
+                payment screenshot on WhatsApp for manual verification.
+              </p>
+              <a
+                className="button primary full-width"
+                href={createUpiIntent(course)}
+              >
+                Pay ₹{course.price} via UPI
+                <ArrowUpRight size={18} />
+              </a>
+              <a
+                className="button whatsapp full-width"
+                href={paymentScreenshotLink(course)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle size={18} /> I’ve paid — send screenshot
+                <ArrowUpRight size={18} />
+              </a>
+            </div>
             <p className="payment-note">
-              <ShieldCheck size={15} /> Razorpay payments are verified
-              automatically; UPI payments are checked manually from your
-              screenshot.
+              <ShieldCheck size={15} /> UPI payment screenshots are checked
+              manually before course access is shared.
             </p>
           </div>
         )}
@@ -1085,7 +1039,7 @@ export default function App() {
                   icon: BookOpen,
                 },
                 {
-                  title: "Pay securely with Razorpay",
+                  title: "Pay securely with UPI",
                   text: "Choose UPI, card, net banking or another available payment method.",
                   icon: Smartphone,
                 },
