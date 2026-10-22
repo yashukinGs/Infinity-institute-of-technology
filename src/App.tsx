@@ -151,28 +151,11 @@ function CourseArt({
         />
       )}
       {course.thumbnail === "video" && (
-        <>
-          <div className="video-editor">
-            <div className="editor-dots">
-              <i />
-              <i />
-              <i />
-            </div>
-            <div className="editor-preview">
-              <Play size={32} fill="currentColor" />
-            </div>
-            <div className="editor-timeline">
-              <i />
-              <i />
-              <i />
-              <i />
-            </div>
-          </div>
-          <span className="art-sticker sticker-violet">
-            <MonitorPlay size={23} />
-          </span>
-          <span className="art-mini-label">TURN IDEAS INTO STORIES.</span>
-        </>
+        <img
+          className="course-thumbnail-image"
+          src="/premiere-course-thumbnail.png"
+          alt="Premiere Pro Video Editing Complete Course thumbnail"
+        />
       )}
       {course.thumbnail === "chatgpt" && (
         <>
