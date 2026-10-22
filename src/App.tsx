@@ -165,48 +165,26 @@ function CourseArt({
         />
       )}
       {course.thumbnail === "marketing" && (
-        <>
-          <span className="marketing-symbol">
-            <Megaphone size={76} strokeWidth={1.5} />
-            <span>GROW</span>
-          </span>
-          <div className="ad-chart">
-            <span>
-              Campaign reach
-              <ArrowUpRight size={15} />
-            </span>
-            <div>
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
-            </div>
-          </div>
-          <span className="art-mini-label">REACH THE RIGHT PEOPLE.</span>
-        </>
+        <img
+          className="course-thumbnail-image"
+          src="/digital-marketing-course-thumbnail.png"
+          alt="Digital Marketing Full Course thumbnail"
+        />
       )}
       {course.thumbnail === "wordpress" && (
-        <>
-          <span className="wordpress-symbol">W</span>
-          <div className="website-preview">
-            <div />
-            <section>
-              <i />
-              <i />
-              <i />
-            </section>
-            <footer>
-              <i />
-              <i />
-              <i />
-            </footer>
-          </div>
-          <span className="art-mini-label">BUILD YOUR CORNER OF THE WEB.</span>
-        </>
+        <img
+          className="course-thumbnail-image"
+          src="/wordpress-course-thumbnail.png"
+          alt="WordPress Complete Course thumbnail"
+        />
       )}
       {course.thumbnail === "animation" && (
         <>
+          <img
+            className="course-thumbnail-image"
+            src="/animation-course-thumbnail.png"
+            alt="3D Animation Complete Course thumbnail"
+          />
           <div className="animation-frame">
             <div className="animation-star">✦</div>
             <span />
