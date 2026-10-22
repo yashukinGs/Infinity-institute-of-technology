@@ -222,11 +222,11 @@ function CourseArt({
         </>
       )}
       {course.thumbnail === "ebooks" && (
-        <div className="ebook-art-symbol">
-          <BookOpen size={57} strokeWidth={1.5} />
-          <strong>1000+</strong>
-          <span>MOTIVATIONAL E-BOOKS</span>
-        </div>
+        <img
+          className="course-thumbnail-image"
+          src="/ebooks-course-thumbnail.png"
+          alt="1000+ Motivational E-books course thumbnail"
+        />
       )}
       {course.thumbnail === "bundle" && (
         <div className="bundle-art-symbol">
