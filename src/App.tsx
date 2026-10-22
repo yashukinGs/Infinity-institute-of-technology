@@ -1040,7 +1040,7 @@ export default function App() {
                 },
                 {
                   title: "Pay securely with UPI",
-                  text: "Choose UPI, card, net banking or another available payment method.",
+                  text: "Pay directly from your UPI app and share the screenshot on WhatsApp.",
                   icon: Smartphone,
                 },
                 {
