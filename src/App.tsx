@@ -26,6 +26,7 @@ import {
   Zap,
 } from "lucide-react"
 import { bundle, courses, type Course } from "./data/courses"
+import { QRCodeSVG } from "qrcode.react"
 import {
   createUpiIntent,
   DISPLAY_PHONE,
@@ -539,6 +540,18 @@ function CheckoutModal({
               <p>
                 Opens your UPI app with ₹{course.price} pre-filled. Send your
                 payment screenshot on WhatsApp for manual verification.
+              </p>
+              <div className="qr-container" aria-label="UPI payment QR code">
+                <QRCodeSVG
+                  value={createUpiIntent(course)}
+                  size={210}
+                  level="M"
+                  includeMargin
+                />
+              </div>
+              <p className="qr-help">
+                On desktop or PC? Scan this QR code with your phone to pay via
+                UPI.
               </p>
               <a
                 className="button primary full-width"
