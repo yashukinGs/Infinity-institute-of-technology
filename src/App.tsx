@@ -144,16 +144,11 @@ function CourseArt({
       <span className="art-grid" />
       <span className="art-orbit" />
       {course.thumbnail === "canva" && (
-        <>
-          <span className="art-script">Canva</span>
-          <span className="art-sticker sticker-pink">
-            <Palette size={23} />
-          </span>
-          <span className="art-sticker sticker-white">
-            <MousePointer2 size={24} />
-          </span>
-          <span className="art-mini-label">MAKE SOMETHING AMAZING.</span>
-        </>
+        <img
+          className="course-thumbnail-image"
+          src="/canva-course-thumbnail.png"
+          alt="Canva Complete Course thumbnail"
+        />
       )}
       {course.thumbnail === "video" && (
         <>
