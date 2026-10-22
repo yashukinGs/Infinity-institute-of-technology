@@ -158,16 +158,11 @@ function CourseArt({
         />
       )}
       {course.thumbnail === "chatgpt" && (
-        <>
-          <div className="ai-symbol">
-            <Sparkles size={65} strokeWidth={1.4} />
-          </div>
-          <span className="ai-prompt">
-            <span className="prompt-dot" /> Ask. Create. Achieve.
-            <MousePointer2 size={17} />
-          </span>
-          <span className="art-mini-label">YOUR EVERYDAY AI SUPERPOWER.</span>
-        </>
+        <img
+          className="course-thumbnail-image"
+          src="/chatgpt-course-thumbnail.png"
+          alt="ChatGPT Complete Course thumbnail"
+        />
       )}
       {course.thumbnail === "marketing" && (
         <>
